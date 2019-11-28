@@ -21,7 +21,7 @@ TagManager:
   - EnemyBody
   - 
   - DontTouchPlayer
-  - 
+  - Floor
   - 
   - UICameraOnly
   - 

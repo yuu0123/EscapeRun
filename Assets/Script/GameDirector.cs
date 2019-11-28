@@ -14,6 +14,7 @@ public class GameDirector : MonoBehaviour {
     [SerializeField] TextMeshProUGUI levelText;
 
     #region UI parts
+    [SerializeField] GameObject resultCollectButton;
     [SerializeField] GameObject resultBG;
     [SerializeField] GameObject newCharaUnlockableBG;
     [SerializeField] Image progressFill;
@@ -75,7 +76,6 @@ public class GameDirector : MonoBehaviour {
         var stageObj = GameObject.FindGameObjectsWithTag("StageItem");
         foreach (GameObject obj in stageObj) {
             obj.GetComponent<TakeCube>().OnGetItem += pos => {
-                Debug.Log("hoge");
                 getEffectParticle.gameObject.transform.position = pos;
                 getEffectParticle.Play();
             };
@@ -109,8 +109,9 @@ public class GameDirector : MonoBehaviour {
     }
 
     private void ShowResult() {
+        resultCollectButton.SetActive(false);
         resultBG.SetActive(true);
-        clearBallScript.PlayMove();
+        clearBallScript.PlayMove(10,()=> { resultCollectButton.SetActive(true); });
     }
 
     public void CloseNewChara() {
