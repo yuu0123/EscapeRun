@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameDirector : MonoBehaviour {
 
@@ -15,6 +16,8 @@ public class GameDirector : MonoBehaviour {
     #region UI parts
     [SerializeField] GameObject resultBG;
     [SerializeField] GameObject newCharaUnlockableBG;
+    [SerializeField] Image progressFill;
+    [SerializeField] TextMeshProUGUI[] progressTexts;
     #endregion
 
     [SerializeField] ParticleSystem getEffectParticle;
@@ -25,9 +28,12 @@ public class GameDirector : MonoBehaviour {
     LineRenderer myLineRenderer;
 
     bool isRescued;
+    CinemachineDollyCart playerDollyCart;
+    
 
     private void OnEnable() {
         //myLineRenderer = GetComponent<LineRenderer>();
+        playerDollyCart = player.GetComponent<CinemachineDollyCart>();
     }
 
     private void Start() {
@@ -35,7 +41,11 @@ public class GameDirector : MonoBehaviour {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
 
-        levelText.text = "LEVEL " + (SELECT_LEVEL + 1);
+        //levelText.text = "LEVEL " + (SELECT_LEVEL + 1);
+
+        progressTexts[0].text = (SELECT_LEVEL + 1).ToString();
+        progressTexts[1].text = (SELECT_LEVEL + 2).ToString();
+        progressFill.fillAmount = playerDollyCart.m_Position;
 
         // ステージすべて非表示
         foreach (GameObject obj in stages) {
@@ -72,6 +82,9 @@ public class GameDirector : MonoBehaviour {
         }
     }
 
+    private void Update() {
+        progressFill.fillAmount = playerDollyCart.m_Position;
+    }
 
     public void Reload() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

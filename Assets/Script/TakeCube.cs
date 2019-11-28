@@ -12,7 +12,7 @@ public class TakeCube : MonoBehaviour {
     MeshRenderer myMeshRenderer;
 
 	void Start(){
-        myMeshRenderer = GetComponent<MeshRenderer>();
+        myMeshRenderer = GetComponentInChildren<MeshRenderer>();
         myAnimation = DOTween.Sequence();
 
         myAnimation.Append(gameObject.transform.DORotate(new Vector3(0,+360,0),5f)).SetRelative()
